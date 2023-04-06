@@ -115,11 +115,31 @@ public class Main : MonoBehaviour
 
     void OnMove(string msg)
     {
-        Debug.Log("OnMove" + msg);
+        string[] str = msg.Split(',');
+
+        if (!otherHuman.ContainsKey(str[0]))
+        {
+            return;
+        }
+
+        float x = float.Parse(str[1]);
+        float y = float.Parse(str[2]);
+        float z = float.Parse(str[3]);
+
+        otherHuman[str[0]].MoveTo(new Vector3(x, y, z));
     }
 
     void OnLeave(string msg)
     {
-        Debug.Log("OnLeave" + msg);
+        string[] str = msg.Split(',');
+
+        if (!otherHuman.ContainsKey(str[0]))
+        {
+            return;
+        }
+
+        //É¾³ý¶ÔÏó
+        Destroy(otherHuman[str[0]].gameObject);
+        otherHuman.Remove(str[0]);
     }
 }
