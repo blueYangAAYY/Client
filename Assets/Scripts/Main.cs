@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
         NetManager.AddListener("List", OnList);
         NetManager.AddListener("Move", OnMove);
         NetManager.AddListener("Leave", OnLeave);
+        NetManager.AddListener("Attack", OnAttack);
 
         //实例化角色
         GameObject obj = GameObject.Instantiate(humanPref, this.transform);
@@ -49,11 +50,11 @@ public class Main : MonoBehaviour
         NetManager.Update();
     }
 
-    void OnEnter(string msg)
+    void OnEnter(string msgArag)
     {
-        Debug.Log("OnEnter" + msg);
+        Debug.Log("OnEnter" + msgArag);
 
-        string[] reStr = msg.Split(',');
+        string[] reStr = msgArag.Split(',');
 
         string desc = reStr[0];
 
@@ -79,11 +80,11 @@ public class Main : MonoBehaviour
         otherHuman.Add(desc, syncHuman);
     }
 
-    private void OnList(string msg)
+    private void OnList(string msgArag)
     {
-        Debug.Log("OnList" + msg);
+        Debug.Log("OnList" + msgArag);
 
-        string[] split = msg.Split(',');
+        string[] split = msgArag.Split(',');
 
         //根据接收到消息 计算 角色数量
         int count = (split.Length - 1) / 6;
@@ -113,9 +114,9 @@ public class Main : MonoBehaviour
     }
 
 
-    void OnMove(string msg)
+    void OnMove(string msgArag)
     {
-        string[] str = msg.Split(',');
+        string[] str = msgArag.Split(',');
 
         if (!otherHuman.ContainsKey(str[0]))
         {
@@ -129,9 +130,9 @@ public class Main : MonoBehaviour
         otherHuman[str[0]].MoveTo(new Vector3(x, y, z));
     }
 
-    void OnLeave(string msg)
+    void OnLeave(string msgArag)
     {
-        string[] str = msg.Split(',');
+        string[] str = msgArag.Split(',');
 
         if (!otherHuman.ContainsKey(str[0]))
         {
@@ -141,5 +142,22 @@ public class Main : MonoBehaviour
         //删除对象
         Destroy(otherHuman[str[0]].gameObject);
         otherHuman.Remove(str[0]);
+    }
+
+    void OnAttack(string msgArag)
+    {
+        string[] str = msgArag.Split(',');
+
+        float x = float.Parse(str[1]);
+        float y = float.Parse(str[2]);
+        float z = float.Parse(str[3]);
+
+        if (!otherHuman.ContainsKey(str[0]))
+        {
+            return;
+        }
+        //播放动画
+        otherHuman[str[0]].transform.LookAt(new Vector3(x, y, z));
+        otherHuman[str[0]].Attack();
     }
 }

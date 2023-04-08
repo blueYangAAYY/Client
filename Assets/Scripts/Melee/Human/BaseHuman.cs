@@ -50,7 +50,7 @@ public class BaseHuman : MonoBehaviour
     protected virtual void Update()
     {
         MoveUpdate();
-        RotateUpdateY();
+        //RotateUpdateY();
         AttackUpdate();
     }
 

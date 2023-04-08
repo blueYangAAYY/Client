@@ -40,7 +40,19 @@ public class CtrlHuman : BaseHuman
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
-            HumanRotate((hit.point - this.transform.position).normalized,this.transform.eulerAngles.normalized);
+            transform.LookAt(hit.point);
+            Attack();
+
+            //∑¢ÀÕ–≠“È
+            string sendStr = "Attack|";
+            sendStr += NetManager.GetDesc() + ",";
+
+            sendStr += hit.point.x + ",";
+            sendStr += hit.point.y + ",";
+            sendStr += hit.point.z + ",";
+
+            NetManager.Send(sendStr);
+            //HumanRotate((hit.point - this.transform.position).normalized,this.transform.eulerAngles.normalized);
         }
 
 
