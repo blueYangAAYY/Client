@@ -23,7 +23,7 @@ public static class NetManager
     static List<string> msgList = new List<string>();
 
     //添加监听
-    public static void AddListener(string msgName,MsgListener listener)
+    public static void AddListener(string msgName, MsgListener listener)
     {
         listeners[msgName] = listener;
 
@@ -42,7 +42,7 @@ public static class NetManager
     }
 
     //连接
-    public static void Connect(string ip,int port)
+    public static void Connect(string ip, int port)
     {
         //init socket
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -69,7 +69,7 @@ public static class NetManager
             //继续接收
             socket.BeginReceive(readBuff, 0, 1024, 0, ReceiveCallback, socket);
         }
-        catch(SocketException ex)
+        catch (SocketException ex)
         {
             Debug.Log("Socket Receive fail" + ex.ToString());
         }
@@ -109,3 +109,4 @@ public static class NetManager
         }
     }
 }
+

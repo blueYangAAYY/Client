@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NetFremework
+
+/*
+    在网络通信中，代替 byet[] 数组
+ */
+namespace NetFramework
 {
     public class ByteArray
     {
